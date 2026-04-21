@@ -4,33 +4,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Eficiencia-Algoritmos** is a Python project for studying and implementing algorithms with a focus on algorithmic efficiency. The project uses Python 3.11 and is configured with a minimal initial setup.
+**Eficiencia-Algoritmos** is a Python laboratory for empirically verifying theoretical Big O complexity. It implements algorithms across complexity classes (O(1), O(n), O(n log n), O(n²)), runs benchmarks against them, and generates scatter plots from real measured data. The project uses Python 3.11+ and `uv` exclusively as the package manager.
 
 ## Development Environment
 
 ### Setup
 - **Python version**: 3.11+ (specified in `.python-version`)
-- **Package manager**: Use `pip` with pyproject.toml as the project specification
-- **Virtual environment**: Create with `python -m venv venv` and activate with `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Unix)
-- **Dependencies**: `pip install matplotlib numpy` (required for benchmark visualizations)
+- **Package manager**: `uv` (exclusive — do not use pip directly)
+- **Virtual environment**: Managed automatically by `uv`
+- **Dependencies**: `uv add matplotlib numpy` (required for benchmark visualizations)
+- **Sync all dependencies**: `uv sync`
 
 ### Running the Project
 - Main entry point: `main.py`
-- Run with: `uv main.py`
-- install with uv add
+- Run with: `uv run main.py`
 
 ## Project Structure
 
 - **algoritmos/**: Core algorithm implementations
-  - `numeros.py`: Number-related algorithms (e.g., `es_par_impar`)
-  - `estructuras.py`: Data structure implementations (stack, queue operations)
-  
-- **experimentos/**: Benchmarking and efficiency analysis scripts
-  - `*_benchmark.py`: Scripts that measure algorithm performance
-  - `img/`: Generated performance visualization graphs
-  - Benchmarks measure time complexity across different input sizes using `matplotlib`
+  - `numeros.py`: `es_par_impar` — O(1) time, O(1) space
+  - `estructuras.py`: stack and queue fill/drain — O(n)
+  - `ordenamiento.py`: `bubble_sort` O(n²), `merge_sort` O(n log n)
+  - `pares.py`: `contar_inversiones`, `encontrar_pares_suma` — O(n²)
+  - `geometria.py`: circle collision detection — O(n²)
 
-- **main.py**: Entry point for demonstrations
+- **experimentos/**: 9 numbered benchmark scripts (01–09)
+  - `img/`: Generated scatter plot images
+
+- **colisiones_pygame.py**: Interactive real-time O(n²) collision demo (Pygame)
+- **main.py**: Basic entry point
 
 ## Benchmarking and Experimentation
 
@@ -38,10 +40,15 @@ The project includes a framework for benchmarking algorithms to verify complexit
 
 ### Running Benchmarks
 ```bash
-python experimentos/es_par_impar_benchmark.py           # Measure time vs number value
-python experimentos/es_par_impar_cantidad_benchmark.py  # Measure time vs quantity (O(n))
-python experimentos/estructura_llenar_benchmark.py      # Compare stack vs queue fill times
-python experimentos/estructura_vaciar_benchmark.py      # Compare stack vs queue empty times
+uv run experimentos/01_es_par_impar_benchmark.py           # O(1): measure time vs number value
+uv run experimentos/02_es_par_impar_cantidad_benchmark.py  # O(n): measure time vs quantity
+uv run experimentos/03_estructura_llenar_benchmark.py      # O(n): stack vs queue fill times
+uv run experimentos/04_estructura_vaciar_benchmark.py      # O(n): stack vs queue empty times
+uv run experimentos/05_bubble_sort_benchmark.py            # O(n²): bubble sort performance
+uv run experimentos/06_bubble_vs_merge_benchmark.py        # O(n²) vs O(n log n) comparison
+uv run experimentos/07_contador_inversiones_benchmark.py   # O(n²): inversion counting
+uv run experimentos/08_colisiones_benchmark.py             # O(n²): circle collision detection
+uv run experimentos/09_dog_image_benchmark.py              # External latency (API calls)
 ```
 
 ### Benchmark Conventions
