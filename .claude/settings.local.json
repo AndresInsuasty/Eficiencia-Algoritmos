@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python experimentos/es_par_impar_cantidad_benchmark.py)",
+      "Bash(python experimentos/estructura_llenar_benchmark.py)",
+      "Bash(python experimentos/estructura_vaciar_benchmark.py)"
+    ]
+  }
+}
